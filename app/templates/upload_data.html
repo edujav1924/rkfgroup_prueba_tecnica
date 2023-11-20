@@ -1,0 +1,151 @@
+{% load static %}
+
+<html>
+
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/lz-string.min.js' %}"></script>
+    <script>
+      //Crear una estructura de objecto javascript que contenga los datos de carga de un pedido (Modelo Orders).
+      const orders = [
+        {
+          artobj_id: 1,
+          precio_unitario: 2000.0,
+          cantidad: 15,
+          iva: 10.0,
+          gravada: 50.0,
+          iva_10: 10.0,
+          iva_5: 5.0,
+          gravada_5: 5.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 2,
+          precio_unitario: 1500.0,
+          cantidad: 20,
+          iva: 8.0,
+          gravada: 40.0,
+          iva_10: 8.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 3,
+          precio_unitario: 1800.0,
+          cantidad: 10,
+          iva: 9.0,
+          gravada: 30.0,
+          iva_10: 9.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 4,
+          precio_unitario: 2500.0,
+          cantidad: 8,
+          iva: 12.0,
+          gravada: 45.0,
+          iva_10: 12.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 5,
+          precio_unitario: 1200.0,
+          cantidad: 25,
+          iva: 6.0,
+          gravada: 60.0,
+          iva_10: 6.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 6,
+          precio_unitario: 3000.0,
+          cantidad: 12,
+          iva: 15.0,
+          gravada: 70.0,
+          iva_10: 15.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 7,
+          precio_unitario: 2800.0,
+          cantidad: 18,
+          iva: 14.0,
+          gravada: 55.0,
+          iva_10: 14.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 8,
+          precio_unitario: 2200.0,
+          cantidad: 5,
+          iva: 11.0,
+          gravada: 25.0,
+          iva_10: 11.0,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 9,
+          precio_unitario: 1600.0,
+          cantidad: 22,
+          iva: 8.8,
+          gravada: 35.0,
+          iva_10: 8.8,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        },
+        {
+          artobj_id: 10,
+          precio_unitario: 1900.0,
+          cantidad: 15,
+          iva: 9.5,
+          gravada: 42.0,
+          iva_10: 9.5,
+          iva_5: 0.0,
+          gravada_5: 0.0,
+          exenta: 0.0,
+        }
+      ];
+      //Convertir este objecto a JSON.
+      let ordersJson = JSON.stringify(orders);
+
+      //Comprimir el JSON con lzstring.
+      let data = LZString.compress(res.message);
+
+      //Guardar en el localstorage.
+      localStorage.setItem("orders", data);
+
+      //Traer los datos del orders guardado con getItem.
+      let ordersLocalstorage = localStorage.getItem("orders");
+
+      //Enviarlo a un endpoint en el BE.
+      $.ajax({
+        url: "{% url 'app:upload_orders_api' %}",
+        type: "POST",
+        dataType: "json", // added data type
+        data: {
+          orders: ordersLocalstorage
+        },
+        success: function (res) {
+          alert(res.message);
+        }
+      });
+    </script>
+  </body>
+
+</html>

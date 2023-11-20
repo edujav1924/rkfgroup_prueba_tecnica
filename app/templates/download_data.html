@@ -1,22 +1,25 @@
 {% load static %}
 
 <html>
+
   <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{% static 'js/lz-string.min.js' %}"></script>
     <script>
       $.ajax({
         url: "{% url 'app:download_api_endpoint' %}",
         type: 'GET',
         dataType: 'json', // added data type
-        success: function(res) {
-            localStorage.setItem('data',res.message);
-            let dataCompressed = localStorage.getItem('data')
-            let data =  LZString.decompressFromUTF16(res.message);
-            alert("exito");
+        success: function (res) {
+          localStorage.setItem('data', res.message);
+          let dataCompressed = localStorage.getItem('data')
+          let data = LZString.decompressFromUTF16(res.message);
+          alert("exito");
         }
-    });
+      });
     </script>
   </body>
-</html>
 
+</html>

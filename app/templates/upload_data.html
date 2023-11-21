@@ -9,8 +9,8 @@
     <script src="{% static 'js/lz-string.min.js' %}"></script>
     <script>
       //Crear una estructura de objecto javascript que contenga los datos de carga de un pedido (Modelo Orders).
-      const orders = [
-        {
+      const orders = {
+        1: [{
           artobj_id: 1,
           precio_unitario: 2000.0,
           cantidad: 15,
@@ -20,8 +20,7 @@
           iva_5: 5.0,
           gravada_5: 5.0,
           exenta: 0.0,
-        },
-        {
+        }, {
           artobj_id: 2,
           precio_unitario: 1500.0,
           cantidad: 20,
@@ -31,8 +30,8 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
+        }],
+        3: [{
           artobj_id: 3,
           precio_unitario: 1800.0,
           cantidad: 10,
@@ -42,8 +41,7 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
+        }, {
           artobj_id: 4,
           precio_unitario: 2500.0,
           cantidad: 8,
@@ -53,8 +51,8 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
+        }],
+        5: [{
           artobj_id: 5,
           precio_unitario: 1200.0,
           cantidad: 25,
@@ -64,8 +62,7 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
+        }, {
           artobj_id: 6,
           precio_unitario: 3000.0,
           cantidad: 12,
@@ -75,8 +72,8 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
+        }],
+        7: [{
           artobj_id: 7,
           precio_unitario: 2800.0,
           cantidad: 18,
@@ -86,8 +83,7 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
+        }, {
           artobj_id: 8,
           precio_unitario: 2200.0,
           cantidad: 5,
@@ -97,35 +93,12 @@
           iva_5: 0.0,
           gravada_5: 0.0,
           exenta: 0.0,
-        },
-        {
-          artobj_id: 9,
-          precio_unitario: 1600.0,
-          cantidad: 22,
-          iva: 8.8,
-          gravada: 35.0,
-          iva_10: 8.8,
-          iva_5: 0.0,
-          gravada_5: 0.0,
-          exenta: 0.0,
-        },
-        {
-          artobj_id: 10,
-          precio_unitario: 1900.0,
-          cantidad: 15,
-          iva: 9.5,
-          gravada: 42.0,
-          iva_10: 9.5,
-          iva_5: 0.0,
-          gravada_5: 0.0,
-          exenta: 0.0,
-        }
-      ];
+        }]
+      };
       //Convertir este objecto a JSON.
       let ordersJson = JSON.stringify(orders);
-
       //Comprimir el JSON con lzstring.
-      let data = LZString.compress(res.message);
+      let data = LZString.compressToBase64(ordersJson);
 
       //Guardar en el localstorage.
       localStorage.setItem("orders", data);
@@ -137,7 +110,6 @@
       $.ajax({
         url: "{% url 'app:upload_orders_api' %}",
         type: "POST",
-        dataType: "json", // added data type
         data: {
           orders: ordersLocalstorage
         },

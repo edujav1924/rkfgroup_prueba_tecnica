@@ -1,10 +1,14 @@
-from django.core.cache import cache
-
+import lzstring
 import json
 from django.views import View
-import lzstring
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
+
+from app.tasks import save_orders_clients
+
 
 class DownloadData(TemplateView):
     template_name = 'download_data.html'
@@ -63,15 +67,29 @@ class DownloadData(TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-class DonwloadApiView(View):
+class DownloadApiView(View):
 
     def get(self, request, *args, **kwargs):
         # Your data to be serialized as JSON
         data = cache.get('data')
-        data = {
-            'message': data,
-            'status': 'success'
-        }
+        data = {'message': data, 'status': 'success'}
+
+        # Create a JsonResponse object and return it
+        return JsonResponse(data)
+
+
+class UploadOrdersView(TemplateView):
+
+    template_name = 'upload_data.html'
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class UploadOrdersAPIView(View):
+
+    def post(self, request, *args, **kwargs):
+        orders = request.POST.get('orders', None)
+        save_orders_clients.delay(orders)
+        data = {'message': "guardado con exito", 'status': 'success'}
 
         # Create a JsonResponse object and return it
         return JsonResponse(data)

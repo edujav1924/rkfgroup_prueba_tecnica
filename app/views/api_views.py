@@ -1,13 +1,10 @@
-import lzstring
-import json
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.views.generic import TemplateView
 from django.core.cache import cache
 
-from app.tasks import save_orders_clients, save_sales_data
+from app.tasks import save_orders_clients
 
 
 class GetSalesDataAPI(View):

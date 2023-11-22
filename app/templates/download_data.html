@@ -9,7 +9,7 @@
     <script src="{% static 'js/lz-string.min.js' %}"></script>
     <script>
       $.ajax({
-        url: "{% url 'app:download_api_endpoint' %}",
+        url: "{% url 'app:get_sales_data_api' %}",
         type: 'GET',
         dataType: 'json', // added data type
         success: function (res) {

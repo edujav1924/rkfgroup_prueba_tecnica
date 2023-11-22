@@ -8,12 +8,17 @@
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{% static 'js/lz-string.min.js' %}"></script>
     <script>
+      // Crear un endpoint para retraer los datos guardados en redis desde el cliente navegador.
       $.ajax({
         url: "{% url 'app:get_sales_data_api' %}",
         type: 'GET',
         dataType: 'json', // added data type
         success: function (res) {
+
+          // Guardar los datos comprimidos en localstorage.
           localStorage.setItem('data', res.message);
+          
+          // A medida que se retrae los datos del localstorage con getItem, descomprimir los datos.
           let dataCompressed = localStorage.getItem('data')
           let data = LZString.decompressFromUTF16(res.message);
           console.log(data);

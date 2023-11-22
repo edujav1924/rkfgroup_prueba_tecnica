@@ -16,6 +16,7 @@
           localStorage.setItem('data', res.message);
           let dataCompressed = localStorage.getItem('data')
           let data = LZString.decompressFromUTF16(res.message);
+          console.log(data);
           alert("exito");
         }
       });

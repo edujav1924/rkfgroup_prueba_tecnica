@@ -14,7 +14,7 @@ django-redis==5.4.0
 future==0.18.3
 importlib-metadata==6.8.0
 kombu==5.3.4
-lzstring==1.0.4
+lzstring @ git+https://github.com/marcel-dancak/lz-string-python@c2a8e14ec55e6917ac9d8b41486df2a9ee79f5bb
 platformdirs==4.0.0
 prompt-toolkit==3.0.41
 python-dateutil==2.8.2

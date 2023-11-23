@@ -67,14 +67,14 @@
       //Convertir este objecto a JSON.
       let ordersJson = JSON.stringify(orders);
       //Comprimir el JSON con lzstring.
-      let data = LZString.compressToBase64(ordersJson);
-
+      let data = LZString.compressToUTF16(ordersJson);
       //Guardar en el localstorage.
       localStorage.setItem("orders", data);
 
       //Traer los datos del orders guardado con getItem.
       let localstorageOrders = localStorage.getItem("orders");
       if (localstorageOrders) {
+
         //Enviarlo a un endpoint en el BE.
         $.ajax({
           url: "{% url 'app:save_orders_api' %}",

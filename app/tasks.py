@@ -8,14 +8,13 @@ from celery import shared_task
 
 from app.models import Orders, OrdersDetail
 
+compressor = lzstring.LZString()
 
 @shared_task
 def save_orders_clients(compressedOrdersData):
-    compressor = lzstring.LZString()
 
     # En el BE descomprimir los datos con lzstring.
-    orders_json = compressor.decompressFromBase64(compressedOrdersData)
-
+    orders_json = compressor.decompressFromUTF16(compressedOrdersData)
     # Convertir el JSON a tipo de datos python.
     client_orders = json.loads(orders_json)
     ultimo_pedido = Orders.objects.last()

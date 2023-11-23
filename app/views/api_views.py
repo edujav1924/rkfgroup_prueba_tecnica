@@ -5,8 +5,6 @@ from django.http import JsonResponse
 from django.core.cache import cache
 
 from app.tasks import save_orders_clients
-
-
 class GetSalesDataAPI(View):
 
     def get(self, request, *args, **kwargs):
@@ -28,7 +26,6 @@ class SaveOrdersAPI(View):
                 'message': "faltan ordenes",
                 'status': 'failed'
             })
-
         save_orders_clients.delay(orders)
 
         # Create a JsonResponse object and return it
